@@ -22,7 +22,23 @@ if not render_auth_gate():
 # ── App-specific CSS ─────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    .stApp { background-color: #0f1117; }
+    .stApp,
+    [data-testid="stAppViewContainer"],
+    .main,
+    .block-container {
+        background-color: #0f1117 !important;
+        color: #e2e8f0 !important;
+    }
+
+    /* Top header / toolbar area */
+    [data-testid="stHeader"] {
+        background: #0f1117 !important;
+    }
+
+    /* Main toolbar buttons area */
+    [data-testid="stToolbar"] {
+        right: 1rem;
+    }
 
     .header-banner {
         background: linear-gradient(135deg, #1a1f36 0%, #2d3561 100%);
@@ -34,10 +50,27 @@ st.markdown("""
         align-items: center;
         justify-content: space-between;
     }
-    .header-left h1 { color: #e8c97a; font-size: 1.8rem; margin: 0; font-weight: 900; }
-    .header-left p  { color: #718096; margin: 0.2rem 0 0 0; font-size: 0.85rem; }
-    .header-right   { color: #a0aec0; font-size: 0.82rem; text-align: right; line-height: 1.7; }
-    .header-right span { color: #e8c97a; font-weight: 700; }
+    .header-left h1 {
+        color: #e8c97a;
+        font-size: 1.8rem;
+        margin: 0;
+        font-weight: 900;
+    }
+    .header-left p {
+        color: #a0aec0;
+        margin: 0.2rem 0 0 0;
+        font-size: 0.85rem;
+    }
+    .header-right {
+        color: #cbd5e0;
+        font-size: 0.82rem;
+        text-align: right;
+        line-height: 1.7;
+    }
+    .header-right span {
+        color: #e8c97a;
+        font-weight: 700;
+    }
 
     .user-bubble {
         background: #2d3561;
@@ -79,7 +112,7 @@ st.markdown("""
         margin-bottom: 0.45rem;
     }
     .info-card-body {
-        color: #a0aec0;
+        color: #cbd5e0;
         font-size: 0.84rem;
         line-height: 1.6;
     }
@@ -90,7 +123,7 @@ st.markdown("""
         border-radius: 8px;
         padding: 0.6rem 0.9rem;
         font-size: 0.76rem;
-        color: #718096;
+        color: #a0aec0;
         margin-top: 0.8rem;
     }
 
@@ -98,16 +131,35 @@ st.markdown("""
         background: #0d1021 !important;
     }
 
+    section[data-testid="stSidebar"] * {
+        color: #e2e8f0 !important;
+    }
+
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] li,
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] span,
+    section[data-testid="stSidebar"] div {
+        color: #cbd5e0 !important;
+    }
+
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] h4 {
+        color: #e8c97a !important;
+    }
+
     div[data-testid="stButton"] > button {
-        background: #2d3561;
-        color: #e8c97a;
-        border: 1px solid #3d4a8a;
-        border-radius: 8px;
-        font-weight: 600;
+        background: #2d3561 !important;
+        color: #e8c97a !important;
+        border: 1px solid #3d4a8a !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
     }
     div[data-testid="stButton"] > button:hover {
-        background: #3d4a8a;
-        color: white;
+        background: #3d4a8a !important;
+        color: white !important;
     }
 
     .empty-state {
@@ -125,7 +177,56 @@ st.markdown("""
         font-size: 0.9rem;
     }
 
-    /* Sidebar open/close button visibility */
+    /* File uploader */
+    [data-testid="stFileUploader"] {
+        background: transparent !important;
+    }
+
+    [data-testid="stFileUploader"] section {
+        background: #161b2e !important;
+        border: 1px dashed #3d4a8a !important;
+        border-radius: 12px !important;
+    }
+
+    [data-testid="stFileUploader"] * {
+        color: #e2e8f0 !important;
+    }
+
+    /* Chat input area */
+    [data-testid="stChatInput"] {
+        background: transparent !important;
+    }
+
+    [data-testid="stChatInput"] > div {
+        background: #0f1117 !important;
+    }
+
+    [data-testid="stChatInput"] textarea,
+    [data-testid="stChatInput"] input {
+        background: #161b2e !important;
+        color: #e2e8f0 !important;
+        border: 1px solid #2b355f !important;
+        border-radius: 12px !important;
+    }
+
+    [data-testid="stChatInput"] button {
+        background: #2d3561 !important;
+        color: #e8c97a !important;
+        border: 1px solid #3d4a8a !important;
+    }
+
+    /* Bottom sticky chat container area */
+    [data-testid="stBottomBlockContainer"] {
+        background: #0f1117 !important;
+        border-top: 1px solid #1a2035 !important;
+    }
+
+    /* General markdown/text cleanup for dark mode consistency */
+    p, li, span, label, div {
+        color: inherit;
+    }
+
+    /* Sidebar toggle button visibility */
     [data-testid="collapsedControl"],
     [data-testid="stSidebarCollapsedControl"] {
         display: flex !important;
@@ -165,7 +266,6 @@ st.markdown("""
         border-color: #e8c97a !important;
     }
 
-    /* Prevent header/banner from covering the reopen arrow */
     .block-container {
         padding-top: 4.5rem !important;
     }
